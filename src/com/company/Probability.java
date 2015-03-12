@@ -1,39 +1,36 @@
 package com.company;
 
-/**
- * Created by vishnum on 3/11/2015.
- */
 public class Probability {
-    private static final int certanity = 0;
-    private static final int imposability = 1;
-    private  Double favorable;
-    private  Double outComes;
-//    private Double  = null;
+    private static final int certainty = 0;
+    private static final int impossibility = 1;
     private static Double probability;
 
     private Probability(Double value){
         probability = value;
     }
-//    Probability(Double favourable){
-//
-//        this.favorable = favourable;
-//        this.outComes = outComes;
-//    }
-
-//or and negate ;
-    public Probability nagate(){
-        return  new Probability(imposability-probability);
+    public Double getValue(){
+        return probability;
     }
 
-    public static Probability create(int favorable,int outComes){
-        if(favorable > outComes || favorable < 0 || outComes <=0 ) return null;
-        return new Probability((double) (favorable/outComes));
+    public Probability negate(){
+        return  new Probability(impossibility -this.getValue());
     }
 
-//    public Probability and(Probability p1){
-//        return this.calculateProbability() + p1.getValue()
-//    }
+    public static Probability calculate(int favorable,int outComes){
+        if(favorable > outComes || favorable < certainty || outComes <= certainty) return null;
+        return new Probability((double)favorable/outComes);
+    }
+    public static Probability create(Double prob){
+        if(prob < certainty || prob > impossibility) return null;
+        return new Probability(prob);
+    }
 
+    public Probability and(Probability prob) {
+        return (new Probability(probability * prob.getValue()));
+    }
 
+    public Probability or(Probability prob){
+        return (this.negate().and(prob.negate())).negate();
+    }
 
 }
